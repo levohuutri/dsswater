@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_67e89dc1cf1598bfaad47ccaa3f4281e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_67e89dc1cf1598bfaad47ccaa3f4281e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_67e89dc1cf1598bfaad47ccaa3f4281e = L.map(
+                "map_67e89dc1cf1598bfaad47ccaa3f4281e",
+                {
+                    center: [10.04518, 105.78841],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 8,
+                    zoomControl: true,
+                    preferCanvas: false,
+                    drawExport: false,
+                    layersControl: true,
+                }
+            );
+            L.control.scale().addTo(map_67e89dc1cf1598bfaad47ccaa3f4281e);
+
+            
+
+        
+    
+            var tile_layer_c92e7aff0c9865ac5a2118ddc6cecbab = L.tileLayer(
+                "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+                {"attribution": "Map tiles by \u003ca href=\"http://stamen.com\"\u003eStamen Design\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by/3.0\"\u003eCC BY 3.0\u003c/a\u003e. Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 24, "maxZoom": 24, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_67e89dc1cf1598bfaad47ccaa3f4281e);
+        
+    
+            L.control.fullscreen(
+                {"forceSeparateButton": false, "position": "topleft", "title": "Full Screen", "titleCancel": "Exit Full Screen"}
+            ).addTo(map_67e89dc1cf1598bfaad47ccaa3f4281e);
+        
+    
+            var options = {
+              position: "topleft",
+              draw: {},
+              edit: {},
+            }
+            // FeatureGroup is to store editable layers.
+            var drawnItems = new L.featureGroup().addTo(
+                map_67e89dc1cf1598bfaad47ccaa3f4281e
+            );
+            options.edit.featureGroup = drawnItems;
+            var draw_control_65676968ccd7347d23f502e371813f81 = new L.Control.Draw(
+                options
+            ).addTo( map_67e89dc1cf1598bfaad47ccaa3f4281e );
+            map_67e89dc1cf1598bfaad47ccaa3f4281e.on(L.Draw.Event.CREATED, function(e) {
+                var layer = e.layer,
+                    type = e.layerType;
+                var coords = JSON.stringify(layer.toGeoJSON());
+                layer.on('click', function() {
+                    alert(coords);
+                    console.log(coords);
+                });
+                drawnItems.addLayer(layer);
+             });
+            map_67e89dc1cf1598bfaad47ccaa3f4281e.on('draw:created', function(e) {
+                drawnItems.addLayer(e.layer);
+            });
+            
+        
+    
+            var measure_control_8a9bba1141566b0f59af91f6267dd0ea = new L.Control.Measure(
+                {"position": "bottomleft", "primaryAreaUnit": "sqmeters", "primaryLengthUnit": "meters", "secondaryAreaUnit": "acres", "secondaryLengthUnit": "miles"});
+            map_67e89dc1cf1598bfaad47ccaa3f4281e.addControl(measure_control_8a9bba1141566b0f59af91f6267dd0ea);
+
+        
+    
+            L.Control.geocoder(
+                {"collapsed": true, "defaultMarkGeocode": true, "position": "topleft"}
+            ).on('markgeocode', function(e) {
+                map_67e89dc1cf1598bfaad47ccaa3f4281e.setView(e.geocode.center, 11);
+            }).addTo(map_67e89dc1cf1598bfaad47ccaa3f4281e);
+
+        
+    
+            map_67e89dc1cf1598bfaad47ccaa3f4281e.fitBounds(
+                [[10.04518, 105.78841], [10.04518, 105.78841]],
+                {"maxZoom": 8}
+            );
+        
+    
+            var marker_cluster_8ec1c538f0e154dcb8b31f24583a2231 = L.markerClusterGroup(
+                {"maxClusterRadius": 80, "spin": true}
+            );
+            map_67e89dc1cf1598bfaad47ccaa3f4281e.addLayer(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+            var marker_4daa4e31b8ba3a33f50717af51175514 = L.marker(
+                [9.3, 105.68],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_a4b48e027b624c4eb776be2a68a19b39 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_90389ec44437442c82a9de577dd558a2 = $(`<div id="html_90389ec44437442c82a9de577dd558a2" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH012022<br><b>Kyhieu</b>: QL1<br><b>longitude</b>: 105.68<br><b>latitude</b>: 9.3<br><b>Z.Elev</b>: 0.64<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 72.28<br><b>WQI_IV</b>: 44.35<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 22.0<br><b>WQI_Desc</b>: Kém<br><b>WQI_Color</b>: RGB(255,0,0)<br><b>WQI_Weight</b>: 23.0<br><b>WQI_no_V</b>: 24.0<br><b>pH</b>: 7.38<br><b>Aldrin</b>: 0.03<br><b>BHC</b>: 0.022<br><b>Dieldrin</b>: 0.016<br><b>DDTs</b>: 0.018<br><b>Heptachlor</b>: 0.039<br><b>Heptachlorepoxide</b>: 0.018<br><b>As</b>: 0.017<br><b>Cd</b>: 0.012<br><b>Pb</b>: 0.004<br><b>Cr6</b>: 0.026<br><b>Cu</b>: 0.001<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.67<br><b>T</b>: 25<br><b>BOD5</b>: 14.6<br><b>COD</b>: 36.399<br><b>TOC</b>: 19.862<br><b>N_NH4</b>: 2.1<br><b>N_NO3</b>: 0.43<br><b>N_NO2</b>: 0.65<br><b>P_PO4</b>: 0.763<br><b>Coliform</b>: 1200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.3<br><b>TSS</b>: 42.9<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_a4b48e027b624c4eb776be2a68a19b39.setContent(html_90389ec44437442c82a9de577dd558a2);
+            
+        
+
+        marker_4daa4e31b8ba3a33f50717af51175514.bindPopup(popup_a4b48e027b624c4eb776be2a68a19b39)
+        ;
+
+        
+    
+    
+            var marker_ca53c7ecaac0ccd7720efa6f92df821d = L.marker(
+                [9.28, 105.59],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_da0da038305c62c656e5b5e83e6ff29a = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_a00ba2f39741895f763ce1a801e08092 = $(`<div id="html_a00ba2f39741895f763ce1a801e08092" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH022022<br><b>Kyhieu</b>: QL2<br><b>longitude</b>: 105.59<br><b>latitude</b>: 9.28<br><b>Z.Elev</b>: 0.6<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 87.89<br><b>WQI_IV</b>: 68.21<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 60.0<br><b>WQI_Desc</b>: Trung bình<br><b>WQI_Color</b>: RGB(255,255,0)<br><b>WQI_Weight</b>: 56.0<br><b>WQI_no_V</b>: 54.0<br><b>pH</b>: 7.46<br><b>Aldrin</b>: 0.027<br><b>BHC</b>: 0.02<br><b>Dieldrin</b>: 0.02<br><b>DDTs</b>: 0.023<br><b>Heptachlor</b>: 0.022<br><b>Heptachlorepoxide</b>: 0.016<br><b>As</b>: 0.014<br><b>Cd</b>: 0.001<br><b>Pb</b>: 0.004<br><b>Cr6</b>: 0.032<br><b>Cu</b>: 0.002<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 4.558<br><b>T</b>: 25<br><b>BOD5</b>: 3.7<br><b>COD</b>: 8.199<br><b>TOC</b>: 9.303<br><b>N_NH4</b>: 2.16<br><b>N_NO3</b>: 0.41<br><b>N_NO2</b>: 0.81<br><b>P_PO4</b>: 0.125<br><b>Coliform</b>: 2200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.2<br><b>TSS</b>: 7.1<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_da0da038305c62c656e5b5e83e6ff29a.setContent(html_a00ba2f39741895f763ce1a801e08092);
+            
+        
+
+        marker_ca53c7ecaac0ccd7720efa6f92df821d.bindPopup(popup_da0da038305c62c656e5b5e83e6ff29a)
+        ;
+
+        
+    
+    
+            var marker_bb5b24f6f174b6516ac5580056c47324 = L.marker(
+                [9.24, 105.45],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_ea06b41e155622d24f69b098c334e131 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_f188422e2dbab36824bd4a6a58bddbc6 = $(`<div id="html_f188422e2dbab36824bd4a6a58bddbc6" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH032022<br><b>Kyhieu</b>: QL3<br><b>longitude</b>: 105.45<br><b>latitude</b>: 9.24<br><b>Z.Elev</b>: 0.46<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 84.57<br><b>WQI_IV</b>: 50.92<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 43.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 44.0<br><b>WQI_no_V</b>: 45.0<br><b>pH</b>: 7.27<br><b>Aldrin</b>: 0.02<br><b>BHC</b>: 0.012<br><b>Dieldrin</b>: 0.009<br><b>DDTs</b>: 0.008<br><b>Heptachlor</b>: 0.034<br><b>Heptachlorepoxide</b>: 0.012<br><b>As</b>: 0.017<br><b>Cd</b>: 0.008<br><b>Pb</b>: 0.004<br><b>Cr6</b>: 0.008<br><b>Cu</b>: 0.003<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.71<br><b>T</b>: 25<br><b>BOD5</b>: 10.3<br><b>COD</b>: 21.711<br><b>TOC</b>: 15.292<br><b>N_NH4</b>: 0.93<br><b>N_NO3</b>: 0.41<br><b>N_NO2</b>: 0.21<br><b>P_PO4</b>: 0.488<br><b>Coliform</b>: 3300.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 9.1<br><b>TSS</b>: 37.66<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_ea06b41e155622d24f69b098c334e131.setContent(html_f188422e2dbab36824bd4a6a58bddbc6);
+            
+        
+
+        marker_bb5b24f6f174b6516ac5580056c47324.bindPopup(popup_ea06b41e155622d24f69b098c334e131)
+        ;
+
+        
+    
+    
+            var marker_2a25bcf0152c34a438c5c0d49907bc11 = L.marker(
+                [9.19, 105.29],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_f96c6599f41203aa5adab2a67f12adf4 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_6ee9f00968ba25e76d3a9826bf65b99f = $(`<div id="html_6ee9f00968ba25e76d3a9826bf65b99f" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH052022<br><b>Kyhieu</b>: QL5<br><b>longitude</b>: 105.29<br><b>latitude</b>: 9.19<br><b>Z.Elev</b>: 0.39<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 64.7<br><b>WQI_IV</b>: 56.57<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 37.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 36.0<br><b>WQI_no_V</b>: 36.0<br><b>pH</b>: 7.52<br><b>Aldrin</b>: 0.025<br><b>BHC</b>: 0.015<br><b>Dieldrin</b>: 0.009<br><b>DDTs</b>: 0.009<br><b>Heptachlor</b>: 0.042<br><b>Heptachlorepoxide</b>: 0.015<br><b>As</b>: 0.019<br><b>Cd</b>: 0.013<br><b>Pb</b>: 0.003<br><b>Cr6</b>: 0.008<br><b>Cu</b>: 0.005<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.002<br><b>DO</b>: 6.328<br><b>T</b>: 25<br><b>BOD5</b>: 15.7<br><b>COD</b>: 36.163<br><b>TOC</b>: 20.774<br><b>N_NH4</b>: 0.62<br><b>N_NO3</b>: 0.34<br><b>N_NO2</b>: 0.21<br><b>P_PO4</b>: 0.146<br><b>Coliform</b>: 5200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 12.0<br><b>TSS</b>: 6.88<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_f96c6599f41203aa5adab2a67f12adf4.setContent(html_6ee9f00968ba25e76d3a9826bf65b99f);
+            
+        
+
+        marker_2a25bcf0152c34a438c5c0d49907bc11.bindPopup(popup_f96c6599f41203aa5adab2a67f12adf4)
+        ;
+
+        
+    
+    
+            var marker_0737eca5da26ef25998f83057b29aec0 = L.marker(
+                [9.19, 105.17],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_4c71637cedd7c58b03c3c3bf8c7c38a1 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_977689bc305c15621577c5297f2aa4fc = $(`<div id="html_977689bc305c15621577c5297f2aa4fc" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH062022<br><b>Kyhieu</b>: QL6<br><b>longitude</b>: 105.17<br><b>latitude</b>: 9.19<br><b>Z.Elev</b>: 0.38<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 75.7<br><b>WQI_IV</b>: 57.17<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 43.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 43.0<br><b>WQI_no_V</b>: 42.0<br><b>pH</b>: 7.36<br><b>Aldrin</b>: 0.025<br><b>BHC</b>: 0.015<br><b>Dieldrin</b>: 0.009<br><b>DDTs</b>: 0.009<br><b>Heptachlor</b>: 0.041<br><b>Heptachlorepoxide</b>: 0.015<br><b>As</b>: 0.019<br><b>Cd</b>: 0.013<br><b>Pb</b>: 0.003<br><b>Cr6</b>: 0.008<br><b>Cu</b>: 0.005<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.288<br><b>T</b>: 25<br><b>BOD5</b>: 15.7<br><b>COD</b>: 33.432<br><b>TOC</b>: 19.853<br><b>N_NH4</b>: 0.62<br><b>N_NO3</b>: 0.34<br><b>N_NO2</b>: 0.21<br><b>P_PO4</b>: 0.146<br><b>Coliform</b>: 5200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 4.4<br><b>TSS</b>: 6.88<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_4c71637cedd7c58b03c3c3bf8c7c38a1.setContent(html_977689bc305c15621577c5297f2aa4fc);
+            
+        
+
+        marker_0737eca5da26ef25998f83057b29aec0.bindPopup(popup_4c71637cedd7c58b03c3c3bf8c7c38a1)
+        ;
+
+        
+    
+    
+            var marker_4531ab600b69612c8db8c570310df4cd = L.marker(
+                [9.37, 105.39],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_7ebbd70bca45dac994d7833642862264 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_f2eb720431fe48661f83413f5adf7ae9 = $(`<div id="html_f2eb720431fe48661f83413f5adf7ae9" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH072022<br><b>Kyhieu</b>: QL7<br><b>longitude</b>: 105.39<br><b>latitude</b>: 9.37<br><b>Z.Elev</b>: 0.4<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 88.82<br><b>WQI_IV</b>: 62.21<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 55.0<br><b>WQI_Desc</b>: Trung bình<br><b>WQI_Color</b>: RGB(255,255,0)<br><b>WQI_Weight</b>: 53.0<br><b>WQI_no_V</b>: 52.0<br><b>pH</b>: 7.42<br><b>Aldrin</b>: 0.024<br><b>BHC</b>: 0.014<br><b>Dieldrin</b>: 0.014<br><b>DDTs</b>: 0.017<br><b>Heptachlor</b>: 0.026<br><b>Heptachlorepoxide</b>: 0.014<br><b>As</b>: 0.02<br><b>Cd</b>: 0.001<br><b>Pb</b>: 0.001<br><b>Cr6</b>: 0.019<br><b>Cu</b>: 0.006<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.513<br><b>T</b>: 25<br><b>BOD5</b>: 3.9<br><b>COD</b>: 8.695<br><b>TOC</b>: 12.392<br><b>N_NH4</b>: 1.8<br><b>N_NO3</b>: 0.11<br><b>N_NO2</b>: 0.47<br><b>P_PO4</b>: 0.55<br><b>Coliform</b>: 6400.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 7.0<br><b>TSS</b>: 7.29<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_7ebbd70bca45dac994d7833642862264.setContent(html_f2eb720431fe48661f83413f5adf7ae9);
+            
+        
+
+        marker_4531ab600b69612c8db8c570310df4cd.bindPopup(popup_7ebbd70bca45dac994d7833642862264)
+        ;
+
+        
+    
+    
+            var marker_412e78b4dadfe5e430b9d7b33598d172 = L.marker(
+                [9.49, 105.52],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_5b48e2e77119cd5a691e2075da5b18eb = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_d5cc9914cd900a6d8c833779d3d6930b = $(`<div id="html_d5cc9914cd900a6d8c833779d3d6930b" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH082022<br><b>Kyhieu</b>: QL8<br><b>longitude</b>: 105.52<br><b>latitude</b>: 9.49<br><b>Z.Elev</b>: 0.41<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 72.22<br><b>WQI_IV</b>: 53.06<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 26.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 26.0<br><b>WQI_no_V</b>: 27.0<br><b>pH</b>: 7.24<br><b>Aldrin</b>: 0.03<br><b>BHC</b>: 0.021<br><b>Dieldrin</b>: 0.016<br><b>DDTs</b>: 0.019<br><b>Heptachlor</b>: 0.038<br><b>Heptachlorepoxide</b>: 0.018<br><b>As</b>: 0.018<br><b>Cd</b>: 0.011<br><b>Pb</b>: 0.003<br><b>Cr6</b>: 0.025<br><b>Cu</b>: 0.004<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.055<br><b>T</b>: 25<br><b>BOD5</b>: 13.7<br><b>COD</b>: 39.319<br><b>TOC</b>: 21.36<br><b>N_NH4</b>: 2.38<br><b>N_NO3</b>: 0.29<br><b>N_NO2</b>: 0.62<br><b>P_PO4</b>: 0.121<br><b>Coliform</b>: 3800.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.8<br><b>TSS</b>: 19.7<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_5b48e2e77119cd5a691e2075da5b18eb.setContent(html_d5cc9914cd900a6d8c833779d3d6930b);
+            
+        
+
+        marker_412e78b4dadfe5e430b9d7b33598d172.bindPopup(popup_5b48e2e77119cd5a691e2075da5b18eb)
+        ;
+
+        
+    
+    
+            var marker_20f3c1bd5f2860ac84dc49a5b6535674 = L.marker(
+                [9.56, 105.59],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_5d614c107a42223d36bb4fd6d04ca458 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_b406a4ab80571077182b89d21d2d87c4 = $(`<div id="html_b406a4ab80571077182b89d21d2d87c4" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH092022<br><b>Kyhieu</b>: QL9<br><b>longitude</b>: 105.59<br><b>latitude</b>: 9.56<br><b>Z.Elev</b>: 0.31<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 75.7<br><b>WQI_IV</b>: 56.99<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 43.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 43.0<br><b>WQI_no_V</b>: 42.0<br><b>pH</b>: 7.41<br><b>Aldrin</b>: 0.025<br><b>BHC</b>: 0.015<br><b>Dieldrin</b>: 0.009<br><b>DDTs</b>: 0.01<br><b>Heptachlor</b>: 0.04<br><b>Heptachlorepoxide</b>: 0.015<br><b>As</b>: 0.019<br><b>Cd</b>: 0.013<br><b>Pb</b>: 0.002<br><b>Cr6</b>: 0.009<br><b>Cu</b>: 0.005<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.443<br><b>T</b>: 25<br><b>BOD5</b>: 15.2<br><b>COD</b>: 33.358<br><b>TOC</b>: 20.062<br><b>N_NH4</b>: 0.79<br><b>N_NO3</b>: 0.24<br><b>N_NO2</b>: 0.23<br><b>P_PO4</b>: 0.113<br><b>Coliform</b>: 5400.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 62.5<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_5d614c107a42223d36bb4fd6d04ca458.setContent(html_b406a4ab80571077182b89d21d2d87c4);
+            
+        
+
+        marker_20f3c1bd5f2860ac84dc49a5b6535674.bindPopup(popup_5d614c107a42223d36bb4fd6d04ca458)
+        ;
+
+        
+    
+    
+            var marker_ebdd580fb4ee717659cb36901d9888a2 = L.marker(
+                [9.59, 105.42],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_3811d3bca81b3964c555fcccb3c57fac = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_66ce1a763661f8f2f0f490d1ed44c219 = $(`<div id="html_66ce1a763661f8f2f0f490d1ed44c219" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH102022<br><b>Kyhieu</b>: QL10<br><b>longitude</b>: 105.42<br><b>latitude</b>: 9.59<br><b>Z.Elev</b>: 0.35<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 72.15<br><b>WQI_IV</b>: 54.01<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 27.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 27.0<br><b>WQI_no_V</b>: 27.0<br><b>pH</b>: 7.26<br><b>Aldrin</b>: 0.033<br><b>BHC</b>: 0.024<br><b>Dieldrin</b>: 0.019<br><b>DDTs</b>: 0.022<br><b>Heptachlor</b>: 0.036<br><b>Heptachlorepoxide</b>: 0.02<br><b>As</b>: 0.018<br><b>Cd</b>: 0.012<br><b>Pb</b>: 0.001<br><b>Cr6</b>: 0.025<br><b>Cu</b>: 0.009<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.888<br><b>T</b>: 25<br><b>BOD5</b>: 14.6<br><b>COD</b>: 33.831<br><b>TOC</b>: 19.379<br><b>N_NH4</b>: 1.66<br><b>N_NO3</b>: 0.12<br><b>N_NO2</b>: 0.63<br><b>P_PO4</b>: 0.13<br><b>Coliform</b>: 9200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.5<br><b>TSS</b>: 14.59<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_3811d3bca81b3964c555fcccb3c57fac.setContent(html_66ce1a763661f8f2f0f490d1ed44c219);
+            
+        
+
+        marker_ebdd580fb4ee717659cb36901d9888a2.bindPopup(popup_3811d3bca81b3964c555fcccb3c57fac)
+        ;
+
+        
+    
+    
+            var marker_13f45a73ba65ec1bfa48dd788bd1eb87 = L.marker(
+                [9.64, 105.29],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_46c7c532705e44999b4acb30201f63ae = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_3bbbf566eef4ada0bdb744794b79b152 = $(`<div id="html_3bbbf566eef4ada0bdb744794b79b152" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH112022<br><b>Kyhieu</b>: QL11<br><b>longitude</b>: 105.29<br><b>latitude</b>: 9.64<br><b>Z.Elev</b>: 0.47<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 82.62<br><b>WQI_IV</b>: 51.16<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 42.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 43.0<br><b>WQI_no_V</b>: 44.0<br><b>pH</b>: 7.39<br><b>Aldrin</b>: 0.027<br><b>BHC</b>: 0.017<br><b>Dieldrin</b>: 0.014<br><b>DDTs</b>: 0.016<br><b>Heptachlor</b>: 0.034<br><b>Heptachlorepoxide</b>: 0.016<br><b>As</b>: 0.019<br><b>Cd</b>: 0.007<br><b>Pb</b>: 0.002<br><b>Cr6</b>: 0.019<br><b>Cu</b>: 0.005<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.468<br><b>T</b>: 25<br><b>BOD5</b>: 9.9<br><b>COD</b>: 26.102<br><b>TOC</b>: 17.812<br><b>N_NH4</b>: 1.0<br><b>N_NO3</b>: 0.24<br><b>N_NO2</b>: 0.48<br><b>P_PO4</b>: 0.475<br><b>Coliform</b>: 5400.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 3.1<br><b>TSS</b>: 3.4<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_46c7c532705e44999b4acb30201f63ae.setContent(html_3bbbf566eef4ada0bdb744794b79b152);
+            
+        
+
+        marker_13f45a73ba65ec1bfa48dd788bd1eb87.bindPopup(popup_46c7c532705e44999b4acb30201f63ae)
+        ;
+
+        
+    
+    
+            var marker_055d6466d47aed303adf6e56fa85fb7c = L.marker(
+                [9.41, 105.27],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_32e4124d7bc9772d2e831698e9a63b85 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_d73497a333a89a1f328bbe495a726b82 = $(`<div id="html_d73497a333a89a1f328bbe495a726b82" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH122022<br><b>Kyhieu</b>: QL12<br><b>longitude</b>: 105.27<br><b>latitude</b>: 9.41<br><b>Z.Elev</b>: 0.4<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 80.44<br><b>WQI_IV</b>: 53.24<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 43.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 43.0<br><b>WQI_no_V</b>: 44.0<br><b>pH</b>: 7.0<br><b>Aldrin</b>: 0.023<br><b>BHC</b>: 0.014<br><b>Dieldrin</b>: 0.01<br><b>DDTs</b>: 0.01<br><b>Heptachlor</b>: 0.037<br><b>Heptachlorepoxide</b>: 0.014<br><b>As</b>: 0.019<br><b>Cd</b>: 0.009<br><b>Pb</b>: 0.005<br><b>Cr6</b>: 0.007<br><b>Cu</b>: 0.007<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.175<br><b>T</b>: 25<br><b>BOD5</b>: 11.1<br><b>COD</b>: 22.984<br><b>TOC</b>: 16.391<br><b>N_NH4</b>: 1.17<br><b>N_NO3</b>: 0.48<br><b>N_NO2</b>: 0.17<br><b>P_PO4</b>: 0.325<br><b>Coliform</b>: 7200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 0.0<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_32e4124d7bc9772d2e831698e9a63b85.setContent(html_d73497a333a89a1f328bbe495a726b82);
+            
+        
+
+        marker_055d6466d47aed303adf6e56fa85fb7c.bindPopup(popup_32e4124d7bc9772d2e831698e9a63b85)
+        ;
+
+        
+    
+    
+            var marker_17c57779b02cb6ddfa60e09a032a4a70 = L.marker(
+                [9.56, 105.8],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_8c07c197773ff8a788c64f5d662b2fa8 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_0af563d9e8ee7b80b65f83160765ab42 = $(`<div id="html_0af563d9e8ee7b80b65f83160765ab42" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH132022<br><b>Kyhieu</b>: QL13<br><b>longitude</b>: 105.8<br><b>latitude</b>: 9.56<br><b>Z.Elev</b>: 0.39<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 84.93<br><b>WQI_IV</b>: 55.51<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 47.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 47.0<br><b>WQI_no_V</b>: 47.0<br><b>pH</b>: 7.22<br><b>Aldrin</b>: 0.022<br><b>BHC</b>: 0.015<br><b>Dieldrin</b>: 0.011<br><b>DDTs</b>: 0.011<br><b>Heptachlor</b>: 0.033<br><b>Heptachlorepoxide</b>: 0.013<br><b>As</b>: 0.016<br><b>Cd</b>: 0.008<br><b>Pb</b>: 0.004<br><b>Cr6</b>: 0.008<br><b>Cu</b>: 0.008<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.255<br><b>T</b>: 25<br><b>BOD5</b>: 10.6<br><b>COD</b>: 30.94<br><b>TOC</b>: 17.519<br><b>N_NH4</b>: 1.56<br><b>N_NO3</b>: 0.44<br><b>N_NO2</b>: 0.21<br><b>P_PO4</b>: 0.13<br><b>Coliform</b>: 8100.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.2<br><b>TSS</b>: 48.97<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_8c07c197773ff8a788c64f5d662b2fa8.setContent(html_0af563d9e8ee7b80b65f83160765ab42);
+            
+        
+
+        marker_17c57779b02cb6ddfa60e09a032a4a70.bindPopup(popup_8c07c197773ff8a788c64f5d662b2fa8)
+        ;
+
+        
+    
+    
+            var marker_650a0fb239bb8557171c3b3044178e28 = L.marker(
+                [9.41, 105.27],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_210879f0d7597c90366eda862dc20657 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_b85720b6001edc77646716ee70731b29 = $(`<div id="html_b85720b6001edc77646716ee70731b29" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH142022<br><b>Kyhieu</b>: DĐ2<br><b>longitude</b>: 105.27<br><b>latitude</b>: 9.41<br><b>Z.Elev</b>: 0.4<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 73.13<br><b>WQI_IV</b>: 46.2<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 23.0<br><b>WQI_Desc</b>: Kém<br><b>WQI_Color</b>: RGB(255,0,0)<br><b>WQI_Weight</b>: 24.0<br><b>WQI_no_V</b>: 25.0<br><b>pH</b>: 7.22<br><b>Aldrin</b>: 0.033<br><b>BHC</b>: 0.024<br><b>Dieldrin</b>: 0.019<br><b>DDTs</b>: 0.018<br><b>Heptachlor</b>: 0.046<br><b>Heptachlorepoxide</b>: 0.02<br><b>As</b>: 0.019<br><b>Cd</b>: 0.011<br><b>Pb</b>: 0.009<br><b>Cr6</b>: 0.019<br><b>Cu</b>: 0.008<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.388<br><b>T</b>: 25<br><b>BOD5</b>: 13.6<br><b>COD</b>: 36.891<br><b>TOC</b>: 21.093<br><b>N_NH4</b>: 1.16<br><b>N_NO3</b>: 0.89<br><b>N_NO2</b>: 0.48<br><b>P_PO4</b>: 0.613<br><b>Coliform</b>: 8400.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 6.1<br><b>TSS</b>: 7.6<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_210879f0d7597c90366eda862dc20657.setContent(html_b85720b6001edc77646716ee70731b29);
+            
+        
+
+        marker_650a0fb239bb8557171c3b3044178e28.bindPopup(popup_210879f0d7597c90366eda862dc20657)
+        ;
+
+        
+    
+    
+            var marker_d75c74fa361584d83c21877ddf275c53 = L.marker(
+                [9.64, 105.3],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_ed4585cee28ad08b44ec15a7c88c3252 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_6d6d7412cfb8035c9cb933b3de7f1b58 = $(`<div id="html_6d6d7412cfb8035c9cb933b3de7f1b58" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: QLPH152022<br><b>Kyhieu</b>: DĐ1<br><b>longitude</b>: 105.3<br><b>latitude</b>: 9.64<br><b>Z.Elev</b>: 0.5<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 72.08<br><b>WQI_IV</b>: 53.47<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 26.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 27.0<br><b>WQI_no_V</b>: 27.0<br><b>pH</b>: 7.0<br><b>Aldrin</b>: 0.035<br><b>BHC</b>: 0.026<br><b>Dieldrin</b>: 0.02<br><b>DDTs</b>: 0.023<br><b>Heptachlor</b>: 0.04<br><b>Heptachlorepoxide</b>: 0.021<br><b>As</b>: 0.018<br><b>Cd</b>: 0.013<br><b>Pb</b>: 0.005<br><b>Cr6</b>: 0.025<br><b>Cu</b>: 0.01<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.838<br><b>T</b>: 25<br><b>BOD5</b>: 15.2<br><b>COD</b>: 34.66<br><b>TOC</b>: 19.565<br><b>N_NH4</b>: 1.76<br><b>N_NO3</b>: 0.45<br><b>N_NO2</b>: 0.63<br><b>P_PO4</b>: 0.131<br><b>Coliform</b>: 9500.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 86.19<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_ed4585cee28ad08b44ec15a7c88c3252.setContent(html_6d6d7412cfb8035c9cb933b3de7f1b58);
+            
+        
+
+        marker_d75c74fa361584d83c21877ddf275c53.bindPopup(popup_ed4585cee28ad08b44ec15a7c88c3252)
+        ;
+
+        
+    
+    
+            var marker_0c2e735b6501da286405867f9c48d7d9 = L.marker(
+                [10.31, 105.48],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_b52d0f543c0a39a4979de59eda65e486 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_6048e818b286c3c93ccea109ba8f05c1 = $(`<div id="html_6048e818b286c3c93ccea109ba8f05c1" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX012022<br><b>Kyhieu</b>: TGLX1<br><b>longitude</b>: 105.48<br><b>latitude</b>: 10.31<br><b>Z.Elev</b>: 1.94<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 71.97<br><b>WQI_IV</b>: 59.86<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 43.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 42.0<br><b>WQI_no_V</b>: 41.0<br><b>pH</b>: 7.53<br><b>Aldrin</b>: 0.024<br><b>BHC</b>: 0.015<br><b>Dieldrin</b>: 0.012<br><b>DDTs</b>: 0.012<br><b>Heptachlor</b>: 0.036<br><b>Heptachlorepoxide</b>: 0.014<br><b>As</b>: 0.018<br><b>Cd</b>: 0.008<br><b>Pb</b>: 0.005<br><b>Cr6</b>: 0.01<br><b>Cu</b>: 0.007<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.002<br><b>DO</b>: 5.888<br><b>T</b>: 25<br><b>BOD5</b>: 10.62<br><b>COD</b>: 30.999<br><b>TOC</b>: 18.486<br><b>N_NH4</b>: 0.4<br><b>N_NO3</b>: 0.5<br><b>N_NO2</b>: 0.25<br><b>P_PO4</b>: 0.188<br><b>Coliform</b>: 6900.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.0<br><b>TSS</b>: 6.45<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_b52d0f543c0a39a4979de59eda65e486.setContent(html_6048e818b286c3c93ccea109ba8f05c1);
+            
+        
+
+        marker_0c2e735b6501da286405867f9c48d7d9.bindPopup(popup_b52d0f543c0a39a4979de59eda65e486)
+        ;
+
+        
+    
+    
+            var marker_1a4994e9535f5ae68af3c986ba00bb36 = L.marker(
+                [10.71, 105.1],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_64f7e0c6eb69abd07a1a26faff9be417 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_3ed94b6ece03f5428eb10713c1ee9136 = $(`<div id="html_3ed94b6ece03f5428eb10713c1ee9136" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX022022<br><b>Kyhieu</b>: TGLX2<br><b>longitude</b>: 105.1<br><b>latitude</b>: 10.71<br><b>Z.Elev</b>: -1.2<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 79.3<br><b>WQI_IV</b>: 51.22<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 41.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 42.0<br><b>WQI_no_V</b>: 42.0<br><b>pH</b>: 7.32<br><b>Aldrin</b>: 0.027<br><b>BHC</b>: 0.018<br><b>Dieldrin</b>: 0.015<br><b>DDTs</b>: 0.017<br><b>Heptachlor</b>: 0.033<br><b>Heptachlorepoxide</b>: 0.016<br><b>As</b>: 0.017<br><b>Cd</b>: 0.009<br><b>Pb</b>: 0.003<br><b>Cr6</b>: 0.016<br><b>Cu</b>: 0.009<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.655<br><b>T</b>: 25<br><b>BOD5</b>: 11.14<br><b>COD</b>: 30.025<br><b>TOC</b>: 17.83<br><b>N_NH4</b>: 1.175<br><b>N_NO3</b>: 0.275<br><b>N_NO2</b>: 0.41<br><b>P_PO4</b>: 0.288<br><b>Coliform</b>: 9200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.0<br><b>TSS</b>: 8.12<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_64f7e0c6eb69abd07a1a26faff9be417.setContent(html_3ed94b6ece03f5428eb10713c1ee9136);
+            
+        
+
+        marker_1a4994e9535f5ae68af3c986ba00bb36.bindPopup(popup_64f7e0c6eb69abd07a1a26faff9be417)
+        ;
+
+        
+    
+    
+            var marker_76eb9b87513441e2efa22557d376261a = L.marker(
+                [10.27, 105.13],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_b5e923bc2f63fe3f52dd17544d1a5fed = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_d1d869a5c90a26f22f5b3348c11990cd = $(`<div id="html_d1d869a5c90a26f22f5b3348c11990cd" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX032022<br><b>Kyhieu</b>: TGLX3<br><b>longitude</b>: 105.13<br><b>latitude</b>: 10.27<br><b>Z.Elev</b>: 1.24<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 62.04<br><b>WQI_IV</b>: 42.64<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 18.0<br><b>WQI_Desc</b>: Kém<br><b>WQI_Color</b>: RGB(255,0,0)<br><b>WQI_Weight</b>: 20.0<br><b>WQI_no_V</b>: 20.0<br><b>pH</b>: 7.21<br><b>Aldrin</b>: 0.044<br><b>BHC</b>: 0.034<br><b>Dieldrin</b>: 0.028<br><b>DDTs</b>: 0.034<br><b>Heptachlor</b>: 0.039<br><b>Heptachlorepoxide</b>: 0.026<br><b>As</b>: 0.019<br><b>Cd</b>: 0.014<br><b>Pb</b>: 0.001<br><b>Cr6</b>: 0.05<br><b>Cu</b>: 0.004<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.258<br><b>T</b>: 25<br><b>BOD5</b>: 16.04<br><b>COD</b>: 45.045<br><b>TOC</b>: 23.469<br><b>N_NH4</b>: 3.768<br><b>N_NO3</b>: 0.148<br><b>N_NO2</b>: 1.25<br><b>P_PO4</b>: 0.45<br><b>Coliform</b>: 3500.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 1.4<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_b5e923bc2f63fe3f52dd17544d1a5fed.setContent(html_d1d869a5c90a26f22f5b3348c11990cd);
+            
+        
+
+        marker_76eb9b87513441e2efa22557d376261a.bindPopup(popup_b5e923bc2f63fe3f52dd17544d1a5fed)
+        ;
+
+        
+    
+    
+            var marker_7058671970c3c2160f20452396a0c165 = L.marker(
+                [10.44, 105.06],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_313ad841ff118fad6c653bc4b47df687 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_8c09a85715bacf7509c85f7f9b271aac = $(`<div id="html_8c09a85715bacf7509c85f7f9b271aac" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX042022<br><b>Kyhieu</b>: TGLX4<br><b>longitude</b>: 105.06<br><b>latitude</b>: 10.44<br><b>Z.Elev</b>: 1.92<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 54.21<br><b>WQI_IV</b>: 39.85<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 15.0<br><b>WQI_Desc</b>: Kém<br><b>WQI_Color</b>: RGB(255,0,0)<br><b>WQI_Weight</b>: 16.0<br><b>WQI_no_V</b>: 17.0<br><b>pH</b>: 7.09<br><b>Aldrin</b>: 0.074<br><b>BHC</b>: 0.064<br><b>Dieldrin</b>: 0.056<br><b>DDTs</b>: 0.069<br><b>Heptachlor</b>: 0.044<br><b>Heptachlorepoxide</b>: 0.044<br><b>As</b>: 0.019<br><b>Cd</b>: 0.018<br><b>Pb</b>: 0.001<br><b>Cr6</b>: 0.106<br><b>Cu</b>: 0.004<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.19<br><b>T</b>: 25<br><b>BOD5</b>: 20.14<br><b>COD</b>: 61.088<br><b>TOC</b>: 28.426<br><b>N_NH4</b>: 6.13<br><b>N_NO3</b>: 0.119<br><b>N_NO2</b>: 2.64<br><b>P_PO4</b>: 0.388<br><b>Coliform</b>: 4100.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 1.24<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_313ad841ff118fad6c653bc4b47df687.setContent(html_8c09a85715bacf7509c85f7f9b271aac);
+            
+        
+
+        marker_7058671970c3c2160f20452396a0c165.bindPopup(popup_313ad841ff118fad6c653bc4b47df687)
+        ;
+
+        
+    
+    
+            var marker_7c33fcff3d553e2bfe160051d04a55dc = L.marker(
+                [10.51, 104.87],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_66f99a04a7f9399d7582ff7e3931e0e2 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_76efb71792ec4a5801fe8190d48a48e5 = $(`<div id="html_76efb71792ec4a5801fe8190d48a48e5" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX052022<br><b>Kyhieu</b>: TGLX5<br><b>longitude</b>: 104.87<br><b>latitude</b>: 10.51<br><b>Z.Elev</b>: 0.33<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 69.94<br><b>WQI_IV</b>: 43.53<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 21.0<br><b>WQI_Desc</b>: Kém<br><b>WQI_Color</b>: RGB(255,0,0)<br><b>WQI_Weight</b>: 22.0<br><b>WQI_no_V</b>: 23.0<br><b>pH</b>: 7.18<br><b>Aldrin</b>: 0.034<br><b>BHC</b>: 0.025<br><b>Dieldrin</b>: 0.019<br><b>DDTs</b>: 0.023<br><b>Heptachlor</b>: 0.039<br><b>Heptachlorepoxide</b>: 0.021<br><b>As</b>: 0.019<br><b>Cd</b>: 0.013<br><b>Pb</b>: 0.001<br><b>Cr6</b>: 0.034<br><b>Cu</b>: 0.002<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.22<br><b>T</b>: 25<br><b>BOD5</b>: 15.97<br><b>COD</b>: 43.435<br><b>TOC</b>: 22.905<br><b>N_NH4</b>: 2.969<br><b>N_NO3</b>: 0.113<br><b>N_NO2</b>: 0.84<br><b>P_PO4</b>: 0.438<br><b>Coliform</b>: 1700.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.0<br><b>TSS</b>: 22.58<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_66f99a04a7f9399d7582ff7e3931e0e2.setContent(html_76efb71792ec4a5801fe8190d48a48e5);
+            
+        
+
+        marker_7c33fcff3d553e2bfe160051d04a55dc.bindPopup(popup_66f99a04a7f9399d7582ff7e3931e0e2)
+        ;
+
+        
+    
+    
+            var marker_232ab5355a74872fc09d07139bbf4b42 = L.marker(
+                [10.53, 104.64],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_9d3308dde5d97efddce6faed9cbc36bb = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_21553d119b12023e21d48e91594e2c3c = $(`<div id="html_21553d119b12023e21d48e91594e2c3c" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX062022<br><b>Kyhieu</b>: TGLX6<br><b>longitude</b>: 104.64<br><b>latitude</b>: 10.53<br><b>Z.Elev</b>: 0.38<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 67.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 76.25<br><b>WQI_IV</b>: 49.24<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 17.0<br><b>WQI_Desc</b>: Kém<br><b>WQI_Color</b>: RGB(255,0,0)<br><b>WQI_Weight</b>: 18.0<br><b>WQI_no_V</b>: 18.0<br><b>pH</b>: 5.67<br><b>Aldrin</b>: 0.032<br><b>BHC</b>: 0.023<br><b>Dieldrin</b>: 0.019<br><b>DDTs</b>: 0.021<br><b>Heptachlor</b>: 0.036<br><b>Heptachlorepoxide</b>: 0.019<br><b>As</b>: 0.019<br><b>Cd</b>: 0.009<br><b>Pb</b>: 0.003<br><b>Cr6</b>: 0.025<br><b>Cu</b>: 0.008<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.218<br><b>T</b>: 25<br><b>BOD5</b>: 11.46<br><b>COD</b>: 26.393<br><b>TOC</b>: 17.529<br><b>N_NH4</b>: 1.62<br><b>N_NO3</b>: 0.313<br><b>N_NO2</b>: 0.62<br><b>P_PO4</b>: 0.5<br><b>Coliform</b>: 8400.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 4.5<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_9d3308dde5d97efddce6faed9cbc36bb.setContent(html_21553d119b12023e21d48e91594e2c3c);
+            
+        
+
+        marker_232ab5355a74872fc09d07139bbf4b42.bindPopup(popup_9d3308dde5d97efddce6faed9cbc36bb)
+        ;
+
+        
+    
+    
+            var marker_13ba9a76ebba323fc319e205d1ff4ad1 = L.marker(
+                [10.02, 105.09],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_29a7a886d22bee589d009a53ef3d56d1 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_739d037070ee28ea5988543b737efd6d = $(`<div id="html_739d037070ee28ea5988543b737efd6d" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX072022<br><b>Kyhieu</b>: TGLX7<br><b>longitude</b>: 105.09<br><b>latitude</b>: 10.02<br><b>Z.Elev</b>: 0.58<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 91.16<br><b>WQI_IV</b>: 60.88<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 55.0<br><b>WQI_Desc</b>: Trung bình<br><b>WQI_Color</b>: RGB(255,255,0)<br><b>WQI_Weight</b>: 54.0<br><b>WQI_no_V</b>: 53.0<br><b>pH</b>: 7.03<br><b>Aldrin</b>: 0.025<br><b>BHC</b>: 0.015<br><b>Dieldrin</b>: 0.015<br><b>DDTs</b>: 0.014<br><b>Heptachlor</b>: 0.033<br><b>Heptachlorepoxide</b>: 0.015<br><b>As</b>: 0.019<br><b>Cd</b>: 0.002<br><b>Pb</b>: 0.008<br><b>Cr6</b>: 0.014<br><b>Cu</b>: 0.007<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.168<br><b>T</b>: 25<br><b>BOD5</b>: 4.35<br><b>COD</b>: 9.419<br><b>TOC</b>: 12.103<br><b>N_NH4</b>: 1.55<br><b>N_NO3</b>: 0.813<br><b>N_NO2</b>: 0.34<br><b>P_PO4</b>: 0.525<br><b>Coliform</b>: 7200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.0<br><b>TSS</b>: 59.1<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_29a7a886d22bee589d009a53ef3d56d1.setContent(html_739d037070ee28ea5988543b737efd6d);
+            
+        
+
+        marker_13ba9a76ebba323fc319e205d1ff4ad1.bindPopup(popup_29a7a886d22bee589d009a53ef3d56d1)
+        ;
+
+        
+    
+    
+            var marker_e78000edf4365fe5c0525def1e88f3ce = L.marker(
+                [10.19, 104.93],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_b7e3caefa4a920a062ba84d2c7d8e18a = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_14b1e05e9a75b17ab97dfa86a5d7dde0 = $(`<div id="html_14b1e05e9a75b17ab97dfa86a5d7dde0" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX082022<br><b>Kyhieu</b>: TGLX8<br><b>longitude</b>: 104.93<br><b>latitude</b>: 10.19<br><b>Z.Elev</b>: 0.57<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 62.3<br><b>WQI_IV</b>: 48.75<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 21.0<br><b>WQI_Desc</b>: Kém<br><b>WQI_Color</b>: RGB(255,0,0)<br><b>WQI_Weight</b>: 22.0<br><b>WQI_no_V</b>: 22.0<br><b>pH</b>: 6.11<br><b>Aldrin</b>: 0.046<br><b>BHC</b>: 0.038<br><b>Dieldrin</b>: 0.03<br><b>DDTs</b>: 0.036<br><b>Heptachlor</b>: 0.04<br><b>Heptachlorepoxide</b>: 0.027<br><b>As</b>: 0.016<br><b>Cd</b>: 0.016<br><b>Pb</b>: 0.002<br><b>Cr6</b>: 0.054<br><b>Cu</b>: 0.003<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.39<br><b>T</b>: 25<br><b>BOD5</b>: 18.24<br><b>COD</b>: 40.525<br><b>TOC</b>: 20.743<br><b>N_NH4</b>: 3.525<br><b>N_NO3</b>: 0.238<br><b>N_NO2</b>: 1.34<br><b>P_PO4</b>: 0.163<br><b>Coliform</b>: 3300.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 7.4<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_b7e3caefa4a920a062ba84d2c7d8e18a.setContent(html_14b1e05e9a75b17ab97dfa86a5d7dde0);
+            
+        
+
+        marker_e78000edf4365fe5c0525def1e88f3ce.bindPopup(popup_b7e3caefa4a920a062ba84d2c7d8e18a)
+        ;
+
+        
+    
+    
+            var marker_d3cd888219191c85cab3806e09579b5f = L.marker(
+                [10.28, 104.74],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_0711d33377f9c230db189329676761ea = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_1d8e6c379fc1c22ed55f1b6b4237bbed = $(`<div id="html_1d8e6c379fc1c22ed55f1b6b4237bbed" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX092022<br><b>Kyhieu</b>: TGLX9<br><b>longitude</b>: 104.74<br><b>latitude</b>: 10.28<br><b>Z.Elev</b>: 0.25<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 10.0<br><b>WQI_II</b>: 68.13<br><b>WQI_III</b>: 61.6<br><b>WQI_IV</b>: 45.69<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 2.0<br><b>WQI_Desc</b>: Ô nhiễm rất nặng<br><b>WQI_Color</b>: RGB(126,0,35)<br><b>WQI_Weight</b>: 2.0<br><b>WQI_no_V</b>: 2.0<br><b>pH</b>: 4.59<br><b>Aldrin</b>: 0.049<br><b>BHC</b>: 0.041<br><b>Dieldrin</b>: 0.033<br><b>DDTs</b>: 0.039<br><b>Heptachlor</b>: 0.044<br><b>Heptachlorepoxide</b>: 0.03<br><b>As</b>: 0.016<br><b>Cd</b>: 0.018<br><b>Pb</b>: 0.003<br><b>Cr6</b>: 0.059<br><b>Cu</b>: 0.002<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.318<br><b>T</b>: 25<br><b>BOD5</b>: 20.74<br><b>COD</b>: 38.766<br><b>TOC</b>: 20.08<br><b>N_NH4</b>: 3.358<br><b>N_NO3</b>: 0.338<br><b>N_NO2</b>: 1.47<br><b>P_PO4</b>: 0.25<br><b>Coliform</b>: 2200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 6.21<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_0711d33377f9c230db189329676761ea.setContent(html_1d8e6c379fc1c22ed55f1b6b4237bbed);
+            
+        
+
+        marker_d3cd888219191c85cab3806e09579b5f.bindPopup(popup_0711d33377f9c230db189329676761ea)
+        ;
+
+        
+    
+    
+            var marker_9e83f83cfce64a490893452cc98ffb42 = L.marker(
+                [10.37, 104.52],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_cda240e995326a8df8284953962bae0e = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_c21be7a4f8ea177704bf57fbfab398d7 = $(`<div id="html_c21be7a4f8ea177704bf57fbfab398d7" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX102022<br><b>Kyhieu</b>: TGLX10<br><b>longitude</b>: 104.52<br><b>latitude</b>: 10.37<br><b>Z.Elev</b>: 0.97<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 75.85<br><b>WQI_IV</b>: 45.49<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 35.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 37.0<br><b>WQI_no_V</b>: 38.0<br><b>pH</b>: 6.91<br><b>Aldrin</b>: 0.025<br><b>BHC</b>: 0.017<br><b>Dieldrin</b>: 0.011<br><b>DDTs</b>: 0.01<br><b>Heptachlor</b>: 0.042<br><b>Heptachlorepoxide</b>: 0.015<br><b>As</b>: 0.016<br><b>Cd</b>: 0.013<br><b>Pb</b>: 0.007<br><b>Cr6</b>: 0.013<br><b>Cu</b>: 0.001<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.455<br><b>T</b>: 25<br><b>BOD5</b>: 15.45<br><b>COD</b>: 30.919<br><b>TOC</b>: 17.812<br><b>N_NH4</b>: 1.699<br><b>N_NO3</b>: 0.65<br><b>N_NO2</b>: 0.32<br><b>P_PO4</b>: 0.625<br><b>Coliform</b>: 1100.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 8.1<br><b>TSS</b>: 1.53<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_cda240e995326a8df8284953962bae0e.setContent(html_c21be7a4f8ea177704bf57fbfab398d7);
+            
+        
+
+        marker_9e83f83cfce64a490893452cc98ffb42.bindPopup(popup_cda240e995326a8df8284953962bae0e)
+        ;
+
+        
+    
+    
+            var marker_9df23bc832007671dbae8e1831a56cd0 = L.marker(
+                [10.26, 105.26],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_26823c15116d15bda09d42a3ad0484ca = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_ce6ae9933100bca71a401cf991206f4d = $(`<div id="html_ce6ae9933100bca71a401cf991206f4d" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX112022<br><b>Kyhieu</b>: TGLX11<br><b>longitude</b>: 105.26<br><b>latitude</b>: 10.26<br><b>Z.Elev</b>: 0.99<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 76.11<br><b>WQI_IV</b>: 46.08<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 35.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 37.0<br><b>WQI_no_V</b>: 38.0<br><b>pH</b>: 7.14<br><b>Aldrin</b>: 0.023<br><b>BHC</b>: 0.014<br><b>Dieldrin</b>: 0.008<br><b>DDTs</b>: 0.009<br><b>Heptachlor</b>: 0.037<br><b>Heptachlorepoxide</b>: 0.014<br><b>As</b>: 0.018<br><b>Cd</b>: 0.012<br><b>Pb</b>: 0.002<br><b>Cr6</b>: 0.006<br><b>Cu</b>: 0.008<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 6.068<br><b>T</b>: 25<br><b>BOD5</b>: 14.24<br><b>COD</b>: 34.338<br><b>TOC</b>: 19.809<br><b>N_NH4</b>: 0.963<br><b>N_NO3</b>: 0.18<br><b>N_NO2</b>: 0.14<br><b>P_PO4</b>: 0.513<br><b>Coliform</b>: 8100.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 2.66<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_26823c15116d15bda09d42a3ad0484ca.setContent(html_ce6ae9933100bca71a401cf991206f4d);
+            
+        
+
+        marker_9df23bc832007671dbae8e1831a56cd0.bindPopup(popup_26823c15116d15bda09d42a3ad0484ca)
+        ;
+
+        
+    
+    
+            var marker_4cd908296e485790750b9313774d7d3d = L.marker(
+                [10.36, 104.86],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_8b8469f78543bc4a7d04c14fb711d818 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_eb02ceb45bd120b302d7856f4145cd56 = $(`<div id="html_eb02ceb45bd120b302d7856f4145cd56" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX122022<br><b>Kyhieu</b>: TGLX12<br><b>longitude</b>: 104.86<br><b>latitude</b>: 10.36<br><b>Z.Elev</b>: 1.42<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 75.48<br><b>WQI_IV</b>: 43.94<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 33.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 36.0<br><b>WQI_no_V</b>: 37.0<br><b>pH</b>: 7.01<br><b>Aldrin</b>: 0.024<br><b>BHC</b>: 0.016<br><b>Dieldrin</b>: 0.009<br><b>DDTs</b>: 0.011<br><b>Heptachlor</b>: 0.038<br><b>Heptachlorepoxide</b>: 0.014<br><b>As</b>: 0.016<br><b>Cd</b>: 0.014<br><b>Pb</b>: 0.002<br><b>Cr6</b>: 0.014<br><b>Cu</b>: 0.001<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.001<br><b>DO</b>: 5.48<br><b>T</b>: 25<br><b>BOD5</b>: 16.71<br><b>COD</b>: 37.116<br><b>TOC</b>: 19.803<br><b>N_NH4</b>: 1.834<br><b>N_NO3</b>: 0.196<br><b>N_NO2</b>: 0.36<br><b>P_PO4</b>: 0.475<br><b>Coliform</b>: 1200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.1<br><b>TSS</b>: 27.18<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_8b8469f78543bc4a7d04c14fb711d818.setContent(html_eb02ceb45bd120b302d7856f4145cd56);
+            
+        
+
+        marker_4cd908296e485790750b9313774d7d3d.bindPopup(popup_8b8469f78543bc4a7d04c14fb711d818)
+        ;
+
+        
+    
+    
+            var marker_b378c65d419acea3b53270d47260d0b4 = L.marker(
+                [10.37, 105.41],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_e1184b71d9911a24540ac2696f7bdb69 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_64c1d9fc67ed148f566a0a114fe443f3 = $(`<div id="html_64c1d9fc67ed148f566a0a114fe443f3" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX132022<br><b>Kyhieu</b>: TGLX13<br><b>longitude</b>: 105.41<br><b>latitude</b>: 10.37<br><b>Z.Elev</b>: 1.53<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 64.59<br><b>WQI_IV</b>: 53.33<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 34.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 35.0<br><b>WQI_no_V</b>: 35.0<br><b>pH</b>: 7.56<br><b>Aldrin</b>: 0.02<br><b>BHC</b>: 0.01<br><b>Dieldrin</b>: 0.006<br><b>DDTs</b>: 0.007<br><b>Heptachlor</b>: 0.036<br><b>Heptachlorepoxide</b>: 0.012<br><b>As</b>: 0.02<br><b>Cd</b>: 0.01<br><b>Pb</b>: 0.001<br><b>Cr6</b>: 0.005<br><b>Cu</b>: 0.005<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.002<br><b>DO</b>: 6.533<br><b>T</b>: 25<br><b>BOD5</b>: 12.34<br><b>COD</b>: 27.54<br><b>TOC</b>: 18.363<br><b>N_NH4</b>: 0.794<br><b>N_NO3</b>: 0.1<br><b>N_NO2</b>: 0.12<br><b>P_PO4</b>: 0.338<br><b>Coliform</b>: 5200.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.0<br><b>TSS</b>: 1.54<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_e1184b71d9911a24540ac2696f7bdb69.setContent(html_64c1d9fc67ed148f566a0a114fe443f3);
+            
+        
+
+        marker_b378c65d419acea3b53270d47260d0b4.bindPopup(popup_e1184b71d9911a24540ac2696f7bdb69)
+        ;
+
+        
+    
+    
+            var marker_db03e4d592467ad145d3302b90d1233a = L.marker(
+                [10.62, 105.21],
+                {}
+            ).addTo(marker_cluster_8ec1c538f0e154dcb8b31f24583a2231);
+        
+    
+        var popup_075cbaae2d71359f5a7f4d359cd8ab70 = L.popup({"maxWidth": 200, "minWidth": 100});
+
+        
+            
+                var html_d2d67bbf81da73d89c752b80ff3b704c = $(`<div id="html_d2d67bbf81da73d89c752b80ff3b704c" style="width: 100.0%; height: 100.0%;"><b>Matram</b>: TGLX142022<br><b>Kyhieu</b>: TGLX14<br><b>longitude</b>: 105.21<br><b>latitude</b>: 10.62<br><b>Z.Elev</b>: -1.23<br><b>Date</b>: 2022-06-01<br><b>WQI_I</b>: 100.0<br><b>WQI_II</b>: 100.0<br><b>WQI_III</b>: 67.49<br><b>WQI_IV</b>: 49.13<br><b>WQI_V</b>: 55.0<br><b>WQI</b>: 33.0<br><b>WQI_Desc</b>: Xấu<br><b>WQI_Color</b>: RGB(255,126,0)<br><b>WQI_Weight</b>: 34.0<br><b>WQI_no_V</b>: 35.0<br><b>pH</b>: 7.52<br><b>Aldrin</b>: 0.027<br><b>BHC</b>: 0.019<br><b>Dieldrin</b>: 0.015<br><b>DDTs</b>: 0.017<br><b>Heptachlor</b>: 0.034<br><b>Heptachlorepoxide</b>: 0.016<br><b>As</b>: 0.018<br><b>Cd</b>: 0.009<br><b>Pb</b>: 0.003<br><b>Cr6</b>: 0.016<br><b>Cu</b>: 0.01<br><b>Zn</b>: 0.0<br><b>Hg</b>: 0.002<br><b>DO</b>: 5.855<br><b>T</b>: 25<br><b>BOD5</b>: 11.14<br><b>COD</b>: 26.106<br><b>TOC</b>: 16.895<br><b>N_NH4</b>: 1.1<br><b>N_NO3</b>: 0.288<br><b>N_NO2</b>: 0.41<br><b>P_PO4</b>: 0.575<br><b>Coliform</b>: 9500.0<br><b>Ecoli</b>: 0<br><b>Salinity</b>: 0.0<br><b>TSS</b>: 8.7<br><b>CL</b>: 0.0<br></div>`)[0];
+                popup_075cbaae2d71359f5a7f4d359cd8ab70.setContent(html_d2d67bbf81da73d89c752b80ff3b704c);
+            
+        
+
+        marker_db03e4d592467ad145d3302b90d1233a.bindPopup(popup_075cbaae2d71359f5a7f4d359cd8ab70)
+        ;
+
+        
+    
+    
+            var layer_control_c25cab110c46768a0a219e06ed5dcef2 = {
+                base_layers : {
+                    "stamentoner" : tile_layer_c92e7aff0c9865ac5a2118ddc6cecbab,
+                },
+                overlays :  {
+                    "Marker Cluster" : marker_cluster_8ec1c538f0e154dcb8b31f24583a2231,
+                },
+            };
+            L.control.layers(
+                layer_control_c25cab110c46768a0a219e06ed5dcef2.base_layers,
+                layer_control_c25cab110c46768a0a219e06ed5dcef2.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_67e89dc1cf1598bfaad47ccaa3f4281e);
+        
+</script>
+</html>
